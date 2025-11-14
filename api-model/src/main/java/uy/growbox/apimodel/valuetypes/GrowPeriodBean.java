@@ -2,13 +2,13 @@ package uy.growbox.apimodel.valuetypes;
 
 import uy.growbox.apimodel.Message;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class GrowPeriodBean implements Serializable {
+//TODO convert to record class and extract logic and constants
+public class GrowPeriodBean {
     public final static String dateFormat = "yyyy-MM-dd";
     public final static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
 

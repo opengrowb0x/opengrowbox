@@ -1,14 +1,14 @@
 # OpenGrowbox
 
-A system for growing plants automatically designed for the RaspberryPi.
+A system for growing plants autonomously, designed for the RaspberryPi.
 Open source software & hardware. Fully featured for hydroponics or soil based growing. 
 
 ## Features 
-  - Automatic Weather Control (Lights, Fans, Temperature, Humidity)
-  - Water & Nutrient dispenser (Hydroponic / Soil based) 
-  - GrowLapse videos & images (supports many cameras & PTZ controls)
-  - Historical data on device
-  - Mobile App access, Alerts & Notifications. 
+  - 🌤️️ Automatic Weather Control (Lights, Fans, Temperature, Humidity)
+  - 💧 Automatic Water & Nutrient dispenser (Hydroponic / Soil based)
+  - 📹 GrowLapse videos & images (supports many cameras & PTZ controls)
+  - 📒 Historical data on device
+  - 📱 Mobile App access, Alerts & Notifications. 
 
 ## The hardware uses
 
@@ -39,19 +39,25 @@ Open source software & hardware. Fully featured for hydroponics or soil based gr
 ## Install Growbox Control 
 
 On your RaspberryPiOs, Raspbian, Ubuntu or any Debian based distribution.
-Before installing you need to connect the cables.
+
+Remember that before installing you need to go through the specific guides:
+
+- [LightsFans.md](./extras/docs/public/LightsFans.md)
+- [TemperatureHumidity.md](./extras/docs/public/TemperatureHumidity.md)
+- [WateringNutrients.md](./extras/docs/public/WateringNutrients.md)
 
 
-If not using **libcamera** you need to adjust the settings for taking the image
-in [config.properties](./config.properties)
 
 ### Add key
 
-    wget -O - https://repo.smartgrow.me.s3-sa-east-1.amazonaws.com/growboxuy-pgp.asc | sudo apt-key add -
+    wget -O --no-check-certificate - https://repo.smartgrow.me.s3-sa-east-1.amazonaws.com/growboxuy-pgp.asc | sudo apt-key add -
+or
+
+    wget -O - http://repo.smartgrow.me.s3-sa-east-1.amazonaws.com/growboxuy-pgp.asc | sudo apt-key add -
 
 ### Add repository
 
-    echo "deb http://repo.smartgrow.me/ /" | sudo tee -a /etc/apt/sources.list.d/growbox.list > /dev/null
+    echo "deb http://repo.smartgrow.me.s3-sa-east-1.amazonaws.com/ /" | sudo tee -a /etc/apt/sources.list.d/growbox.list > /dev/null
 
 ### Update apt and install
 
@@ -105,13 +111,9 @@ After you've connected the wires and can successfully use the sensor/module/pump
 
 ### Disable or enable ports
 
-To disable a port set enabled to 0 on the desired port, i.e.: temperature
+To disable a port set 'enabled' property to 0 (1 to enable) on the desired port, i.e.: temperature
     
     sqlite3 growbox.db "update ports set enabled = 0 where portId = 'temperature';"
-
-To enable a port set enabled to 1 on the desired port, i.e.: temperature
-
-    sqlite3 growbox.db "update ports set enabled = 1 where portId = 'lights';"
 
 
 See more in the [DATABASE.MD](./extras/docs/DATABASE.MD) document.
