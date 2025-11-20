@@ -13,6 +13,7 @@ public class Message {
     public static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN);
 
 
+// Android version
 //    public static class AndroidByteArrayToBase64TypeAdapter implements JsonSerializer<byte[]>, JsonDeserializer<byte[]> {
 //        @Override
 //        public byte[] deserialize(JsonElement jsonElement, java.lang.reflect.Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {

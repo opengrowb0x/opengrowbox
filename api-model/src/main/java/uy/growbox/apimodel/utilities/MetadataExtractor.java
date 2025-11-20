@@ -19,25 +19,24 @@ import java.util.logging.Logger;
 
 public class MetadataExtractor {
 
-    private static Logger log = Logger.getLogger(MetadataExtractor.class.getSimpleName());
+    private static final Logger log = Logger.getLogger(MetadataExtractor.class.getSimpleName());
 
     public static LocalDate extractDateFromMetadata(File sourceImage) {
-		final JpegDirectory directory;
-		try {
-			directory = extractMetadata(sourceImage);
-			Date date = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
-			if (date != null) {
-				LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-				return localDate;
-			}
-		} catch (IOException | ImageProcessingException e) {
+        final JpegDirectory directory;
+        try {
+            directory = extractMetadata(sourceImage);
+            Date date = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
+            if (date != null) {
+                return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            }
+        } catch (IOException | ImageProcessingException e) {
             log.warning(" exception unable to determine date from exif data. falling back to file creation. " + e.getMessage());
             return getFileCreationDate(sourceImage.toPath());
-		}
-		return null;
-	}
+        }
+        return null;
+    }
 
-	private static LocalDate getFileCreationDate(Path file) {
+    private static LocalDate getFileCreationDate(Path file) {
         try {
             BasicFileAttributes attr = Files.readAttributes(file, BasicFileAttributes.class);
             log.info("creationTime: " + attr.creationTime());
@@ -48,7 +47,7 @@ public class MetadataExtractor {
         return null;
     }
 
-	public static int extractImageWidth(ExifSubIFDDirectory directory) throws MetadataException {
+    public static int extractImageWidth(ExifSubIFDDirectory directory) throws MetadataException {
         return directory.getInt(ExifSubIFDDirectory.TAG_EXIF_IMAGE_WIDTH);
     }
 
@@ -60,8 +59,7 @@ public class MetadataExtractor {
         Metadata metadata;
         try {
             metadata = ImageMetadataReader.readMetadata(sourceImage);
-            final JpegDirectory jpegDirectory = (JpegDirectory) metadata.getDirectories().iterator().next();
-            return jpegDirectory;
+            return (JpegDirectory) metadata.getDirectories().iterator().next();
 
         } catch (IOException e) {
             log.warning("Could not extract exif data. Skipping extraction: "
@@ -74,11 +72,11 @@ public class MetadataExtractor {
     public static byte[] getImageBytes(File imgPath) {
         try {
             if (imgPath != null && imgPath.exists()) {
-                final byte[] imageBytes = Files.readAllBytes(imgPath.toPath());
-                return imageBytes;
+                return Files.readAllBytes(imgPath.toPath());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.warning("Could not get image bytes. Skipping extraction: "
+                    + e.getMessage());
         }
         return null;
     }

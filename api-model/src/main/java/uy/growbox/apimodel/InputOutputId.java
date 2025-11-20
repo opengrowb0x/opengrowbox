@@ -13,8 +13,9 @@ public enum InputOutputId {
         nutrient_b,
         nutrient_c,
         flood,
-        waterLevel,
+        waterLevel,// binary float based, on when low.
+        totalWaterFlow,// hall effect flow valve
         waterConductivity,
         fan,
-        fan2,
+        fan2, // air filter fan
 }
